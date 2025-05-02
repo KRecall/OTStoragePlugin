@@ -1,15 +1,15 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
-val groupName = "io.github.octestx.krecall.plugins.captureScreen.kdespectacle"
+val groupName = "io.github.octestx.krecall.plugins.storage.otstorage"
 val versionName = "1.0-SNAPSHOT"
-val pluginPackName = "CaptureScreenByKDESpectaclePlugin"
+val pluginPackName = "OTStoragePlugin"
 val plugins = listOf(
     PluginMetadata(
-        pluginId = "CaptureScreenByKDESpectaclePlugin",
+        pluginId = "OTStoragePlugin",
         supportPlatform = setOf(OS.LINUX),
         supportUI = true,
         // 插件类的全限定名
-        pluginClass = "$groupName.CaptureScreenByKDESpectaclePlugin"
+        pluginClass = "$groupName.OTStoragePlugin"
     ),
 )
 
@@ -23,6 +23,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     kotlin("plugin.serialization") version "1.9.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("app.cash.sqldelight") version("2.0.2")
 }
 
 group = groupName
@@ -43,9 +44,23 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.components.resources)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    implementation("io.github.octestx.krecall.plugins.basiclib:library:1.4.6")
-    implementation("io.github.octestx:basic-multiplatform-lib:0.1.0")
+    implementation("io.github.octestx.krecall.plugins.basiclib:library:1.4.9")
+    implementation("io.github.octestx:basic-multiplatform-lib:0.1.1")
     implementation("io.github.octestx:basic-multiplatform-ui-lib:0.1.3")
+}
+
+sqldelight {
+    databases {
+        create("DBOTStorage") {
+            packageName.set("models.sqld")
+            dialect("app.cash.sqldelight:sqlite-3-35-dialect:2.0.2") // 明确指定方言
+//            // 添加迁移配置
+//            migrationOutputDirectory.set(file("src/main/sqldelight/migrations"))
+//            schemaOutputDirectory.set(file("src/main/sqldelight/schemas"))
+//            // 启用迁移验证
+//            verifyMigrations.set(true)
+        }
+    }
 }
 
 //compose.desktop {

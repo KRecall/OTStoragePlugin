@@ -1,12 +1,12 @@
 # Plugin Development Guide
 
 ## Change your project info
-In the setting.gradle.kts file
+In the `settings.gradle.kts` file
 ```kotlin
 rootProject.name = "SpectacleGetScreenKRecallPlugin"
 ```
 
-In the build.gradle.kts file
+In the `build.gradle.kts` file
 ```kotlin
 val plugins = listOf(
     PluginMetadata(
