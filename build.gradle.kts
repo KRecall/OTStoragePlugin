@@ -82,12 +82,28 @@ tasks {
         archiveVersion.set(versionName)
         archiveClassifier.set("")
 
-        // 包含所有插件元数据
+        // 关键配置：清空依赖配置
+        configurations = emptyList()
+
+        // 包含编译输出
+        from(sourceSets.main.get().output)
+
+        // 包含资源文件
+        from(sourceSets.main.get().resources)
+
+        // 包含自定义元数据
         into("META-INF/plugins") {
             from(generatePluginMetadata())
         }
 
-        configurations = listOf(project.configurations.runtimeClasspath.get())
+        // 资源过滤配置
+        exclude("META-INF/*.SF")
+        exclude("META-INF/*.DSA")
+        exclude("META-INF/*.RSA")
+        exclude("META-INF/NOTICE*")
+        exclude("META-INF/LICENSE*")
+        exclude("META-INF/INDEX.LIST")
+        exclude("**/module-info.class")
     }
 
     register("generateMetadata") {
