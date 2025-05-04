@@ -6,7 +6,7 @@ val pluginPackName = "OTStoragePlugin"
 val plugins = listOf(
     PluginMetadata(
         pluginId = "OTStoragePlugin",
-        supportPlatform = setOf(OS.LINUX),
+        supportPlatform = setOf(OS.LINUX, OS.WIN, OS.MACOS, OS.OTHER),
         supportUI = true,
         // 插件类的全限定名
         pluginClass = "$groupName.OTStoragePlugin"
